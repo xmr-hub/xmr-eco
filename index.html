@@ -307,22 +307,19 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    margin-top: 22px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 100px;
-    padding: 9px 20px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 12px;
+    padding: 10px 18px;
     font-family: 'DM Mono', monospace;
     font-size: 13px;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
     color: var(--text);
     cursor: pointer;
     text-decoration: none;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     animation: ticker-fadein 0.8s ease both;
   }
 
@@ -331,97 +328,73 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .price-ticker::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,102,0,0.06), transparent);
-    transform: translateX(-100%);
-    animation: shimmer 3s infinite;
-  }
-
-  @keyframes shimmer {
-    0%   { transform: translateX(-100%); }
-    60%, 100% { transform: translateX(100%); }
-  }
-
   .price-ticker:hover {
-    border-color: rgba(255,102,0,0.5);
-    box-shadow: 0 0 24px rgba(255,102,0,0.15);
+    border-color: rgba(255,102,0,0.35);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     transform: translateY(-1px);
   }
 
-  .price-ticker:active { transform: translateY(0px) scale(0.98); }
+  .price-ticker:active { transform: scale(0.98); }
 
   .price-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px; height: 6px;
     border-radius: 50%;
     background: #22c55e;
     flex-shrink: 0;
-    position: relative;
-    animation: pulse-dot 2s infinite;
-  }
-
-  .price-dot::after {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    border-radius: 50%;
-    background: rgba(34,197,94,0.3);
-    animation: pulse-ring 2s infinite;
+    box-shadow: 0 0 6px rgba(34,197,94,0.6);
+    animation: pulse-dot 2.5s infinite;
   }
 
   @keyframes pulse-dot {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
+    50% { opacity: 0.5; }
   }
 
-  @keyframes pulse-ring {
-    0%   { transform: scale(0.8); opacity: 0.8; }
-    100% { transform: scale(1.8); opacity: 0; }
+  .price-label {
+    color: rgba(240,239,236,0.4);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 
-  .price-label { color: var(--muted); font-size: 11px; }
+  .price-divider {
+    width: 1px; height: 14px;
+    background: rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
 
   .price-value {
     color: var(--text);
-    font-weight: 400;
+    font-weight: 500;
+    font-size: 14px;
     transition: color 0.4s;
   }
 
-  .price-value.up   { color: #22c55e; }
-  .price-value.down { color: #ef4444; }
+  .price-value.up   { color: #f0efec; }
+  .price-value.down { color: #f0efec; }
+  .price-value.price-loading { color: rgba(240,239,236,0.3); font-size: 12px; }
 
   .price-change {
     font-size: 11px;
-    padding: 2px 7px;
-    border-radius: 100px;
-    font-weight: 400;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
     transition: background 0.3s, color 0.3s;
   }
 
-  .price-change.up   { background: rgba(34,197,94,0.15);  color: #22c55e; }
-  .price-change.down { background: rgba(239,68,68,0.15);  color: #ef4444; }
-
-  .price-loading { color: var(--muted); font-size: 12px; animation: blink 1.4s infinite; }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
+  .price-change.up   { background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.2); }
+  .price-change.down { background: rgba(239,68,68,0.12);  color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
 
   .chart-icon {
-    font-size: 10px;
-    color: var(--muted);
-    transition: color 0.2s, transform 0.2s;
+    font-size: 12px;
+    color: rgba(240,239,236,0.25);
+    transition: color 0.2s;
     margin-left: 2px;
   }
 
-  .price-ticker:hover .chart-icon {
-    color: var(--xmr);
-    transform: scale(1.2);
-  }
+  .price-ticker:hover .chart-icon { color: rgba(255,102,0,0.7); }
+
 
 
   /* ── Directory Button ── */
@@ -1908,43 +1881,57 @@
 
   /* Action nav */
   .action-nav {
-    display: flex; justify-content: center; gap: 10px;
+    display: flex; justify-content: center; align-items: center; gap: 8px;
     margin-top: 32px; flex-wrap: wrap;
-    max-width: 420px; margin-left: auto; margin-right: auto;
     position: relative; z-index: 1;
   }
   .nav-pill {
-    display: inline-flex; align-items: center; gap: 7px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.09);
-    color: var(--text); font-family: 'DM Sans', sans-serif;
-    font-size: 12px; font-weight: 500; letter-spacing: 0.06em;
-    text-transform: uppercase; text-decoration: none;
-    padding: 13px 26px; border-radius: 100px; cursor: pointer;
-    transition: all 0.22s cubic-bezier(0.4,0,0.2,1);
-    position: relative; overflow: hidden;
-    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(240,239,236,0.75);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    padding: 11px 22px; border-radius: 10px; cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.15s, color 0.2s;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    white-space: nowrap;
   }
   .nav-pill:hover {
-    border-color: rgba(255,102,0,0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color: #f0efec;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
   }
-  .nav-pill:active { transform: translateY(0) scale(0.98); }
+  .nav-pill:active { transform: scale(0.97); }
   .nav-pill.primary {
-    background: linear-gradient(135deg, var(--xmr), #ff8c38);
-    border-color: transparent; color: #1a1207; font-weight: 600;
-    box-shadow: 0 4px 24px rgba(255,102,0,0.35);
+    background: #FF6600;
+    border-color: transparent;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 2px 16px rgba(255,102,0,0.3);
   }
-  .nav-pill.primary:hover { box-shadow: 0 8px 32px rgba(255,102,0,0.5); transform: translateY(-2px); }
+  .nav-pill.primary:hover {
+    background: #ff7a1a;
+    box-shadow: 0 6px 24px rgba(255,102,0,0.45);
+    transform: translateY(-1px);
+    color: #fff;
+  }
   .nav-pill.accent {
-    background: rgba(255,102,0,0.1);
-    border-color: rgba(255,102,0,0.25);
+    background: rgba(255,102,0,0.08);
+    border-color: rgba(255,102,0,0.3);
     color: #FF6600;
   }
-  .nav-pill.accent:hover { background: rgba(255,102,0,0.16); border-color: rgba(255,102,0,0.45); }
-  .nav-pill-icon { font-size: 13px; }
-
+  .nav-pill.accent:hover {
+    background: rgba(255,102,0,0.14);
+    border-color: rgba(255,102,0,0.5);
+    color: #ff7a1a;
+    box-shadow: 0 6px 20px rgba(255,102,0,0.15);
+  }
+  .nav-pill-icon { font-size: 12px; opacity: 0.8; }
   /* Wordmark class no longer used, keep rule empty to avoid breakage */
   .wordmark { display: none; }
   h1 { font-size: inherit; font-weight: inherit; letter-spacing: inherit; color: inherit; line-height: inherit; }
@@ -2060,13 +2047,14 @@
 
     
 
-    <div style="margin-top:28px;">
+    <div style="margin-top:24px;">
       <a href="https://www.tradingview.com/chart/?symbol=KRAKEN%3AXMRUSD" target="_blank" rel="noopener" class="price-ticker" id="xmr-ticker">
         <span class="price-dot"></span>
         <span class="price-label">XMR</span>
-        <span class="price-value price-loading" id="xmr-price">Loading...</span>
+        <span class="price-divider"></span>
+        <span class="price-value price-loading" id="xmr-price">—</span>
         <span class="price-change" id="xmr-change" style="display:none;"></span>
-        <span class="chart-icon">â†—</span>
+        <span class="chart-icon">↗</span>
       </a>
     </div>
 
